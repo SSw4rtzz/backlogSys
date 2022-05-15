@@ -11,7 +11,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Pk MembrosEq (N de Empregado)
         /// </summary>
-        public int IdEmpregado { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Nome do empregado

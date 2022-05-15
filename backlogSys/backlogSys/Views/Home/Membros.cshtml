@@ -1,0 +1,42 @@
+﻿@model IEnumerable<backlogSys.Models.MembrosEq>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Listagem de todos os médicos veterinários</h1>
+
+<p>
+    <a asp-action="Create">Adicionar novo médico</a>
+</p>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            @* Model -> representa a lista de médicos veterinários enviados para a View *@
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                    @* este html.helper mostra o conteúdo de cada um dos registos da listagem do Model
+                        neste caso, o Nome
+                    *@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

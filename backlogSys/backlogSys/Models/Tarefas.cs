@@ -7,7 +7,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// PK da Tarefa
         /// </summary>
-        public int IdTarefa { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Titulo da tarefa

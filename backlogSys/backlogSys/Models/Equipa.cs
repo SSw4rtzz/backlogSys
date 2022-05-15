@@ -14,7 +14,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// PK da Equipa
         /// </summary>
-        public int IdEquipa { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Nome da Equipa
@@ -29,7 +29,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// NEmpregado do TeamLeader da Equipa
         /// </summary>
-        public string TeamLeader { get; set; }
+        public int TeamLeader { get; set; }
 
         /// <summary>
         /// NEmpregado do Chefe

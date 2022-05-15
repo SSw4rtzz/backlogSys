@@ -14,8 +14,14 @@ namespace backlogSys.Data {
             : base(options) {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<MembrosEq>().HasData(
+            new MembrosEq { Id = 1, Nome = "José Lopes", Email = "Vet-8768", Efetividade="Sim", Foto = "Jose.jpg"  }
+            );
+        }
 
-        // definir as tabelas
+
+        // Definir as tabelas
         public DbSet<Tarefas> Tarefas { get; set; }
         public DbSet<MembrosEq> Membros { get; set; }
         public DbSet<Equipa> Equipa { get; set; }
