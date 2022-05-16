@@ -8,7 +8,7 @@ using backlogSys.Data;
 
 #nullable disable
 
-namespace backlogSys.Migrations
+namespace backlogSys.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
