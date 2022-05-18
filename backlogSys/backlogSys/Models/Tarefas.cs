@@ -29,7 +29,7 @@ namespace backlogSys.Models {
         /// </summary>
         [ForeignKey(nameof(Membros))]
         public int MembrosFK { get; set; }
-        public MembrosEq Membros { get; set; }
+        public MembrosEquipa Membros { get; set; }
 
         /// <summary>
         /// Data de criação da tarefa

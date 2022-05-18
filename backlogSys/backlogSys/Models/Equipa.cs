@@ -8,7 +8,7 @@ namespace backlogSys.Models {
     public class Equipa {
 
         public Equipa() {
-            ListaMembros = new HashSet<MembrosEq>();
+            ListaMembros = new HashSet<MembrosEquipa>();
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Lista de membros da Equipa
         /// </summary>
-        public ICollection<MembrosEq> ListaMembros { get; set; }
+        public ICollection<MembrosEquipa> ListaMembros { get; set; }
 
     }
 
