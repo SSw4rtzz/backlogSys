@@ -16,6 +16,7 @@
     <None Remove="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
     <None Remove="Microsoft.AspNetCore.Identity.UI" />
     <None Remove="Swashbuckle.AspNetCore" />
+    <None Remove="Views\Membros %28copiar%29\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
@@ -32,5 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Views\Equipa\" />
   </ItemGroup>
 </Project>
