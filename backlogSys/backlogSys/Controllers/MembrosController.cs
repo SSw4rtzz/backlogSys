@@ -8,13 +8,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace backlogSys.Controllers
 {
-    public class MembrosController : Controller
-    {
+    public class MembrosController : Controller{
+
 
         /// <summary>
         /// Cria uma referência à base de dados do projeto
         /// </summary>
         private readonly ApplicationDbContext _context;
+
 
         /// <summary>
         /// Dados Servidor ASP .NET
@@ -22,7 +23,7 @@ namespace backlogSys.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public MembrosController(ApplicationDbContext context,IWebHostEnvironment webHostEnvironment){
+        public MembrosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment) {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -33,16 +34,13 @@ namespace backlogSys.Controllers
         }
 
         //GET: Membros/Details
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Details(int? id){
+            if (id == null){
                 return NotFound();
             }
 
             var membroEquipa = await _context.Membros.FirstOrDefaultAsync(m => m.Id == id);
-                if(membroEquipa == null)
-            {
+            if(membroEquipa == null){
                 return NotFound();
             }
             return View(membroEquipa);
@@ -53,45 +51,23 @@ namespace backlogSys.Controllers
         /// <summary>
         /// Cria a view para adicionar um Membro a uma equipa
         /// </summary>
-        /// <returns></returns>
-        public IActionResult Create(){
-            ViewData["EquipaFK"] = new SelectList(_context.Equipa.OrderBy(v => v.Nome), "Id", "Nome");
 
+        public IActionResult Create() {
             return View();
         }
 
         //POST: Membros/Create  FALTA FOTOGRAFIA
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK")] MembrosEquipa membroEquipa, IFormFile fotoMembro){
-
-            if(fotoMembro == null) {
-                membroEquipa.Foto = "null.jpg";
-            } else {
-                if(!(fotoMembro.ContentType == "image/jpeg" || fotoMembro.ContentType == "image/png")) {
-                    ModelState.AddModelError("", "Tipo de ficheiro não compativel");
-                    return View(membroEquipa);
-                } else {
-                    string nomeImagem = "";
-                    Guid g;
-                    g = Guid.NewGuid();
-                    nomeImagem = g.ToString();
-                    //Extensão do ficheiro
-                    string extensaoImagem = Path.GetExtension(fotoMembro.FileName).ToLower();
-                    nomeImagem += extensaoImagem;
-                    //Atribui aos dados do membro o nome da foto
-                    membroEquipa.Foto = nomeImagem;
-                }
-            }
+        public async Task<IActionResult> Create([Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK")] MembrosEquipa membros) {
 
 
-            if (ModelState.IsValid){
-                    _context.Add(membroEquipa);
-                    await _context.SaveChangesAsync();
+            if (ModelState.IsValid) {
+                _context.Add(membros);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-                }
-            ViewData["EquipaFK"] = new SelectList(_context.Equipa, "Id", "Id", membroEquipa.EquipaFK);
-            return View(membroEquipa);
+            }
+            return View(membros);
         }
 
         //GET: Membros/Edit
@@ -114,12 +90,10 @@ namespace backlogSys.Controllers
         //POST: Membros/Edit  FALTA FOTOGRAFIA
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK")] MembrosEquipa membroEquipa, IFormFile fotoMembro) {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK")] MembrosEquipa membroEquipa) {
             if(id != membroEquipa.Id) {
                 return NotFound();
             }
-
-
             
             int? idMembro = HttpContext.Session.GetInt32("idMem");
 

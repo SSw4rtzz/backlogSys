@@ -53,7 +53,7 @@ namespace backlogSys.Controllers
         /// <summary>
         /// Cria a view para adicionar uma Equipa
         /// </summary>
-        /// <returns></returns>
+
         public IActionResult Create(){
             return View();
         }

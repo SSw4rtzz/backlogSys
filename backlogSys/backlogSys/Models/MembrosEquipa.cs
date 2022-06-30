@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backlogSys.Models {
     public class MembrosEquipa {
@@ -29,12 +30,15 @@ namespace backlogSys.Models {
 
         public string Foto { get; set; }
 
+        public int EquipaFK { get; set; }
+
         /// <summary>
         /// FK IdEquipa
         /// </summary>
-        [ForeignKey(nameof(Equipa))]
-        public int EquipaFK { get; set; }
-        public Equipa Equipa { get; set; }
+        //[Display(Name ="Equipa")]
+        //public int EquipaFK { get; set; }
+        //[ForeignKey(nameof(EquipaFK))]
+        //public Equipa Equipa { get; set; }
 
 
         /// <summary>
