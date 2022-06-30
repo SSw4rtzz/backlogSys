@@ -24,7 +24,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Email da Equipa
         /// </summary>
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// NEmpregado do TeamLeader da Equipa

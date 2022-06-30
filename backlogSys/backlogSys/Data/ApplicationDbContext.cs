@@ -36,6 +36,12 @@ namespace backlogSys.Data {
             new MembrosEquipa { Id = 9, Nome = "Igor Pinheiro", Email = "ipinheiro@empresa.com", Efetividade = "Sim", Foto = "dsantos.jpg", EquipaFK = 4 },
             new MembrosEquipa { Id = 10, Nome = "Joana Marques", Email = "jmarques@empresa.com", Efetividade = "Não", Foto = "egonçalves.jpg", EquipaFK = 4 }
             );
+
+            modelBuilder.Entity<Tarefas>().HasData(
+            new Tarefas { Id = 1, Titulo = "Corrigir erro do formulário das tarefas, no BacklogSys", Descricao = "Corrigir erro do formulário das tarefas, este não está a enviar os dados para a base de dados como devia", PontoSituacao = "Por fazer", MembrosFK = 2, DataCriacao = DateTime.UtcNow, Prazo = DateTime.UtcNow, DataConclusao= DateTime.UtcNow },
+            new Tarefas { Id = 2, Titulo = "FrontEnd Sistema de Logins", Descricao = "Criar interface para o sistema de logins", PontoSituacao = "Em desenvolvimento", MembrosFK = 2, DataCriacao = DateTime.UtcNow, Prazo = DateTime.UtcNow, DataConclusao = DateTime.UtcNow }
+
+            );
         }
 
 
@@ -43,7 +49,5 @@ namespace backlogSys.Data {
         public DbSet<Tarefas> Tarefas { get; set; }
         public DbSet<MembrosEquipa> Membros { get; set; }
         public DbSet<Equipa> Equipa { get; set; }
-
-
     }
 }

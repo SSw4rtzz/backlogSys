@@ -66,6 +66,7 @@ namespace backlogSys.Controllers
             return View(tarefa);
         }
 
+
         //GET: Tarefa/Edit
         public async Task<IActionResult> Edit(int? id) {
             if (id == null) {
@@ -86,7 +87,7 @@ namespace backlogSys.Controllers
         //POST: Tarefas/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,PontoSituacao,Membros,DataCriacao,Prazo,DataConclusao")] Tarefas tarefa) {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,PontoSituacao,MembrosFK,DataCriacao,Prazo,DataConclusao")] Tarefas tarefa) {
             if (id != tarefa.Id) {
                 return NotFound();
             }

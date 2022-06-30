@@ -17,7 +17,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Descrição da Tarefa
         /// </summary>
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
         /// <summary>
         /// Status da tarefa, Por Fazer/Em progresso/Stand-by/Aguarda Intervanção/Concluido
@@ -29,7 +29,7 @@ namespace backlogSys.Models {
         /// </summary>
         [ForeignKey(nameof(Membros))]
         public int MembrosFK { get; set; }
-        public MembrosEquipa Membros { get; set; }
+        public MembrosEquipa? Membros { get; set; }
 
         /// <summary>
         /// Data de criação da tarefa
@@ -39,12 +39,12 @@ namespace backlogSys.Models {
         /// <summary>
         /// Prazo para terminar a tarefa
         /// </summary>
-        public DateTime Prazo { get; set; }
+        public DateTime? Prazo { get; set; }
 
         /// <summary>
         /// Data de conclusão da tarefa
         /// </summary>
-        public DateTime DataConclusao { get; set; }
+        public DateTime? DataConclusao { get; set; }
 
 
     }
