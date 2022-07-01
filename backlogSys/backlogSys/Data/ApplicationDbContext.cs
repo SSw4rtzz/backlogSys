@@ -1,10 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using backlogSys.Models;
 
 namespace backlogSys.Data {
+
+    /// <summary>
+    /// Dados do utilizador
+    /// </summary>
+    public class ApplicationUser : IdentityUser {
+        public DateTime DataRegisto { get; set; }
+        public string User { get; set; }
+    }
 
     /// <summary>
     /// Base de dados

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backlogSys.Models {
@@ -27,8 +27,10 @@ namespace backlogSys.Models {
         /// <summary>
         /// FK MembrosEq, Membros a desempenhar a tarefa
         /// </summary>
-        [ForeignKey(nameof(Membros))]
-        public int MembrosFK { get; set; }
+
+        [Display(Name = "Membros")]
+        public int? MembrosFK { get; set; }
+        [ForeignKey(nameof(MembrosFK))]
         public MembrosEquipa? Membros { get; set; }
 
         /// <summary>

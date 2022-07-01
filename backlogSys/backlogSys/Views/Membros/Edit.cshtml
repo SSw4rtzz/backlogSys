@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -25,18 +25,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="Efetividade" class="control-label"></label>
-                <input asp-for="Efetividade" class="form-control" />
-                <span asp-validation-for="Efetividade" class="text-danger"></span>
+                <select asp-for="Efetividade" class="form-control">
+                    <option value="">Seleciona uma opção</option>
+                    <option value="Sim">Contratado/Efetivo</option>
+                    <option value="Não">Estagiário</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Foto" class="control-label"></label>
-                <input asp-for="Foto" class="form-control" />
-                <span asp-validation-for="Foto" class="text-danger"></span>
+                <input type="file" name="foto" class="form-control" accept=".jpg,.png" />
             </div>
             <div class="form-group">
                 <label asp-for="EquipaFK" class="control-label"></label>
                 <input asp-for="EquipaFK" class="form-control" />
-                <span asp-validation-for="EquipaFK" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

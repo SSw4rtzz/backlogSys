@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backlogSys.Data;
 
@@ -10,9 +11,10 @@ using backlogSys.Data;
 namespace backlogSys.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220630194428_UpdateFK")]
+    partial class UpdateFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,6 +86,7 @@ namespace backlogSys.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Efetividade")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
@@ -94,6 +97,7 @@ namespace backlogSys.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Foto")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Nome")
@@ -238,23 +242,23 @@ namespace backlogSys.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DataConclusao = new DateTime(2022, 7, 1, 1, 7, 27, 980, DateTimeKind.Utc).AddTicks(9030),
-                            DataCriacao = new DateTime(2022, 7, 1, 1, 7, 27, 980, DateTimeKind.Utc).AddTicks(9030),
+                            DataConclusao = new DateTime(2022, 6, 30, 19, 44, 27, 955, DateTimeKind.Utc).AddTicks(1780),
+                            DataCriacao = new DateTime(2022, 6, 30, 19, 44, 27, 955, DateTimeKind.Utc).AddTicks(1770),
                             Descricao = "Corrigir erro do formulário das tarefas, este não está a enviar os dados para a base de dados como devia",
                             MembrosFK = 2,
                             PontoSituacao = "Por fazer",
-                            Prazo = new DateTime(2022, 7, 1, 1, 7, 27, 980, DateTimeKind.Utc).AddTicks(9030),
+                            Prazo = new DateTime(2022, 6, 30, 19, 44, 27, 955, DateTimeKind.Utc).AddTicks(1770),
                             Titulo = "Corrigir erro do formulário das tarefas, no BacklogSys"
                         },
                         new
                         {
                             Id = 2,
-                            DataConclusao = new DateTime(2022, 7, 1, 1, 7, 27, 980, DateTimeKind.Utc).AddTicks(9030),
-                            DataCriacao = new DateTime(2022, 7, 1, 1, 7, 27, 980, DateTimeKind.Utc).AddTicks(9030),
+                            DataConclusao = new DateTime(2022, 6, 30, 19, 44, 27, 955, DateTimeKind.Utc).AddTicks(1780),
+                            DataCriacao = new DateTime(2022, 6, 30, 19, 44, 27, 955, DateTimeKind.Utc).AddTicks(1780),
                             Descricao = "Criar interface para o sistema de logins",
                             MembrosFK = 2,
                             PontoSituacao = "Em desenvolvimento",
-                            Prazo = new DateTime(2022, 7, 1, 1, 7, 27, 980, DateTimeKind.Utc).AddTicks(9030),
+                            Prazo = new DateTime(2022, 6, 30, 19, 44, 27, 955, DateTimeKind.Utc).AddTicks(1780),
                             Titulo = "FrontEnd Sistema de Logins"
                         });
                 });

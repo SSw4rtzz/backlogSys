@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 using backlogSys.Models;
 using backlogSys.Data;
@@ -50,6 +51,7 @@ namespace backlogSys.Controllers
         /// </summary>
 
         public IActionResult Create() {
+            ViewData["MembrosFK"] = new SelectList(_context.Membros.OrderBy(m => m.Nome), "Id", "Nome");
             return View();
         }
 
@@ -63,6 +65,9 @@ namespace backlogSys.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["MembrosFK"] = new SelectList(_context.Tarefas, "Id", "Id", tarefa.MembrosFK);
+
             return View(tarefa);
         }
 
