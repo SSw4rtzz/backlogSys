@@ -2,14 +2,15 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 using backlogSys.Models;
 using backlogSys.Data;
 
-namespace backlogSys.Controllers
-{
-    public class TarefasController : Controller
-    {
+namespace backlogSys.Controllers{
+    [Authorize]
+    public class TarefasController : Controller{
         /// <summary>
         /// Cria uma referência à base de dados do projeto
         /// </summary>
@@ -20,25 +21,47 @@ namespace backlogSys.Controllers
         /// </summary>
         private readonly IWebHostEnvironment _webHostEnvironment;
 
+        /// <summary>
+        /// Dados do User autenticado
+        /// </summary>
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TarefasController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment){
+
+        public TarefasController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager){
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
         }
 
 
         //GET: Tarefas
         public async Task<IActionResult> Index(){
-            return View(await _context.Tarefas.ToListAsync());
+            if (User.IsInRole("Funcionario")) {
+                string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
+                var tarefas = _context.Tarefas
+                    .Include(a => a.Membros)
+                    .Where(a => a.Membros.UserId == idAuthenticatedUser);
+
+
+            return View(await tarefas.ToListAsync());
+            }
+            var allTarefas = _context.Tarefas.Include(a => a.Membros);
+            return View(await allTarefas.ToListAsync());
         }
 
         //GET: Tarefas/Details
         public async Task<IActionResult> Details(int? id) {
-            if (id == null) {
+            if (id == null || _context.Tarefas == null) {
                 return NotFound();
             }
 
-            var tarefa = await _context.Tarefas.FirstOrDefaultAsync(m => m.Id == id);
+            string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
+            var tarefa = _context.Tarefas
+                .Include(a => a.Membros)
+                .Where(m => m.Id == id && m.Membros.UserId == idAuthenticatedUser)
+                .FirstOrDefaultAsync();
+
+
             if (tarefa == null) {
                 return NotFound();
             }
@@ -60,6 +83,13 @@ namespace backlogSys.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Titulo,Descricao,PontoSituacao,MembrosFK,DataCriacao,Prazo,DataConclusao")] Tarefas tarefa) {
 
+            string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
+            var idMembro = _context.Membros
+                .Where(m => m.UserId == idAuthenticatedUser)
+                .FirstOrDefault().Id;
+
+            tarefa.MembrosFK = idMembro;
+
             if (ModelState.IsValid) {
                 _context.Add(tarefa);
                 await _context.SaveChangesAsync();
@@ -67,14 +97,13 @@ namespace backlogSys.Controllers
             }
 
             ViewData["MembrosFK"] = new SelectList(_context.Tarefas, "Id", "Id", tarefa.MembrosFK);
-
             return View(tarefa);
         }
 
 
         //GET: Tarefa/Edit
         public async Task<IActionResult> Edit(int? id) {
-            if (id == null) {
+            if (id == null || _context.Tarefas == null) {
                 return RedirectToAction("Index");
             }
 
@@ -96,8 +125,6 @@ namespace backlogSys.Controllers
             if (id != tarefa.Id) {
                 return NotFound();
             }
-
-
 
             int? idTarefa = HttpContext.Session.GetInt32("id");
 

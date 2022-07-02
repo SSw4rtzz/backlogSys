@@ -5,12 +5,9 @@
 
 }
 
-<link href="../Assets/style.css" type="text/css" rel="stylesheet">
-<script src="../Assets/script.js"></script>
-
 <h1>Página de Membros</h1>
 
-@if (User.Identity.IsAuthenticated) {
+@*if (User.Identity.IsAuthenticated) {*@
         <p>
             <a asp-action="Create">Adicionar novo Membro</a>
         </p>
@@ -73,4 +70,3 @@
         }
     </tbody>
 </table>
-}

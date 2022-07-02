@@ -19,7 +19,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Nome da Equipa
         /// </summary>
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         /// <summary>
         /// Email da Equipa
@@ -29,12 +29,12 @@ namespace backlogSys.Models {
         /// <summary>
         /// NEmpregado do TeamLeader da Equipa
         /// </summary>
-        public int TeamLeader { get; set; }
+        public int? TeamLeader { get; set; }
 
         /// <summary>
         /// NEmpregado do Chefe
         /// </summary>
-        public int Chefe { get; set; }
+        public int? Chefe { get; set; }
 
         /// <summary>
         /// Lista de membros da Equipa

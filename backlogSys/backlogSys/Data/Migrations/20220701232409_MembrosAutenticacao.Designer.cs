@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backlogSys.Data;
 
@@ -10,9 +11,10 @@ using backlogSys.Data;
 namespace backlogSys.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220701232409_MembrosAutenticacao")]
+    partial class MembrosAutenticacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,16 +98,17 @@ namespace backlogSys.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("Chefe")
+                    b.Property<int>("Chefe")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("TeamLeader")
+                    b.Property<int>("TeamLeader")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -157,6 +160,7 @@ namespace backlogSys.Data.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("EquipaFK")
@@ -290,7 +294,7 @@ namespace backlogSys.Data.Migrations
                     b.Property<DateTime?>("DataConclusao")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("DataCriacao")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Descricao")
@@ -300,12 +304,14 @@ namespace backlogSys.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PontoSituacao")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("Prazo")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Titulo")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -318,23 +324,23 @@ namespace backlogSys.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DataConclusao = new DateTime(2022, 7, 2, 16, 12, 46, 532, DateTimeKind.Utc).AddTicks(2080),
-                            DataCriacao = new DateTime(2022, 7, 2, 16, 12, 46, 532, DateTimeKind.Utc).AddTicks(2080),
+                            DataConclusao = new DateTime(2022, 7, 1, 23, 24, 9, 531, DateTimeKind.Utc).AddTicks(2380),
+                            DataCriacao = new DateTime(2022, 7, 1, 23, 24, 9, 531, DateTimeKind.Utc).AddTicks(2380),
                             Descricao = "Corrigir erro do formulário das tarefas, este não está a enviar os dados para a base de dados como devia",
                             MembrosFK = 2,
                             PontoSituacao = "Por fazer",
-                            Prazo = new DateTime(2022, 7, 2, 16, 12, 46, 532, DateTimeKind.Utc).AddTicks(2080),
+                            Prazo = new DateTime(2022, 7, 1, 23, 24, 9, 531, DateTimeKind.Utc).AddTicks(2380),
                             Titulo = "Corrigir erro do formulário das tarefas, no BacklogSys"
                         },
                         new
                         {
                             Id = 2,
-                            DataConclusao = new DateTime(2022, 7, 2, 16, 12, 46, 532, DateTimeKind.Utc).AddTicks(2080),
-                            DataCriacao = new DateTime(2022, 7, 2, 16, 12, 46, 532, DateTimeKind.Utc).AddTicks(2080),
+                            DataConclusao = new DateTime(2022, 7, 1, 23, 24, 9, 531, DateTimeKind.Utc).AddTicks(2390),
+                            DataCriacao = new DateTime(2022, 7, 1, 23, 24, 9, 531, DateTimeKind.Utc).AddTicks(2380),
                             Descricao = "Criar interface para o sistema de logins",
                             MembrosFK = 2,
                             PontoSituacao = "Em desenvolvimento",
-                            Prazo = new DateTime(2022, 7, 2, 16, 12, 46, 532, DateTimeKind.Utc).AddTicks(2080),
+                            Prazo = new DateTime(2022, 7, 1, 23, 24, 9, 531, DateTimeKind.Utc).AddTicks(2390),
                             Titulo = "FrontEnd Sistema de Logins"
                         });
                 });
@@ -368,21 +374,21 @@ namespace backlogSys.Data.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "34639e08-a408-4a37-891c-94694a13807d",
+                            ConcurrencyStamp = "bc69ed7d-05cf-4c73-bffb-7e41f864dc8b",
                             Name = "Administrativo",
                             NormalizedName = "ADMINISTRATIVO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "ee11eedf-fcc5-4759-9571-5b570d20a243",
+                            ConcurrencyStamp = "15086eb9-3fad-406b-b926-0c77c175ae05",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "3cb49f25-1a48-46fa-afbe-525f5de78d56",
+                            ConcurrencyStamp = "275756b4-0d2a-4249-ba37-28449649b00f",
                             Name = "Chefe",
                             NormalizedName = "CHEFE"
                         });

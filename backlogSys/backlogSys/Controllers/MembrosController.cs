@@ -3,13 +3,24 @@ using Microsoft.EntityFrameworkCore;
 
 using backlogSys.Models;
 using backlogSys.Data;
-using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace backlogSys.Controllers{
 
-    [Authorize]
+
+    /*
+     * [Authorize] Todos os users autenticadas têm acesso 
+     * 
+     * [Authorize(Roles="Administrativo")] Apenas users autenticados com perfil "Administrativo" têm acesso
+     * [Authorize(Roles="Administrativo,Funcionario")] Um ou outro
+     * 
+     * [Authorize(Roles="Administrativo")]  Tem de ter ambas as roles
+     * [Authorize(Roles="Funcionario")]
+     *  
+     */
+
+    [AllowAnonymous]
     public class MembrosController : Controller {
 
 
@@ -64,6 +75,7 @@ namespace backlogSys.Controllers{
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK")] MembrosEquipa membros, IFormFile foto) {
 
+
             //Caso não seja fornecida uma foto, é atribuido uma foto padrão com o nome null.jpg
             if (foto == null) {
                 membros.Foto = "null.jpg";
@@ -103,7 +115,7 @@ namespace backlogSys.Controllers{
                 using var stream = new FileStream(destImag, FileMode.Create); //Guarda a fotografia na pasta Fotos
                 await foto.CopyToAsync(stream);
             }
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
         }
 
             ViewData["EquipaFK"] = new SelectList(_context.Equipa, "Id", "Id", membros.EquipaFK);
@@ -151,7 +163,7 @@ namespace backlogSys.Controllers{
 
             //Caso não seja fornecida uma foto, é atribuido uma foto padrão com o nome null.jpg
             if (foto == null) {
-                membroEquipa.Foto = "null.jpg";
+                
             } else {
                 //Verifica se o ficheiro inserido é uma imagem válida, se não for, mostra mensagem de erro
                 if (!(foto.ContentType == "image/jpeg" || foto.ContentType == "image/png")) {
@@ -171,11 +183,17 @@ namespace backlogSys.Controllers{
             //Valida dados e se válidos, adiciona à Base de Dados e guarda numa pasta com nome "Fotos"
             if (ModelState.IsValid) {
                 try {
-                    _context.Add(membroEquipa);
+                    _context.Update(membroEquipa);
                     await _context.SaveChangesAsync();
-                } catch (Exception ex) {
+                } catch (DbUpdateConcurrencyException) {
+                    if (!MembrosEquipaExists(membroEquipa.Id)) {
+                        return NotFound();
+                    } else {
+                        throw;
+                    }
+                } catch (Exception) {
                     ModelState.AddModelError("", "Não foi possivel guardar os dados introduzidos na base de dados");
-                    return View(membroEquipa);
+                    throw;
                 }
 
                 //Verifica se foi enviada uma fotografia e guarda-a no destino Fotos
@@ -187,24 +205,6 @@ namespace backlogSys.Controllers{
                     destImag = Path.Combine(destImag, "Fotos", membroEquipa.Foto);
                     using var stream = new FileStream(destImag, FileMode.Create); //Guarda a fotografia na pasta Fotos
                     await foto.CopyToAsync(stream);
-                }
-                return RedirectToAction(nameof(Index));
-            }
-
-            //Validação dos dados inseridos
-            if (ModelState.IsValid) {
-                try {
-                    _context.Update(membroEquipa);
-                    await _context.SaveChangesAsync();
-
-                } catch (DbUpdateConcurrencyException) {
-                    if (!MembrosEquipaExists(membroEquipa.Id)) {
-                        return NotFound();
-                    } else {
-                        throw;
-                    }
-                } catch (Exception) {
-                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -226,6 +226,8 @@ namespace backlogSys.Controllers{
         }
 
         //POST: Membros/Delete
+        //Criado em contexto de base de dados um trigger que elimina também o user,
+        //ou seja, uma vez que um funcionário é eliminado a sua conta também deixa de existir
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id) {

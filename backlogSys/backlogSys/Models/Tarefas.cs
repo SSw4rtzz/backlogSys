@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace backlogSys.Models {
     public class Tarefas {
 
@@ -12,17 +13,19 @@ namespace backlogSys.Models {
         /// <summary>
         /// Titulo da tarefa
         /// </summary>
-        public string Titulo { get; set; }
+        public string? Titulo { get; set; }
 
         /// <summary>
         /// Descrição da Tarefa
         /// </summary>
+        [Display(Name = "Descrição")]
         public string? Descricao { get; set; }
 
         /// <summary>
         /// Status da tarefa, Por Fazer/Em progresso/Stand-by/Aguarda Intervanção/Concluido
         /// </summary>
-        public string PontoSituacao { get; set; }
+        [Display(Name = "Ponto de Situação")]
+        public string? PontoSituacao { get; set; }
 
         /// <summary>
         /// FK MembrosEq, Membros a desempenhar a tarefa
@@ -36,7 +39,8 @@ namespace backlogSys.Models {
         /// <summary>
         /// Data de criação da tarefa
         /// </summary>
-        public DateTime DataCriacao { get; set; }
+        [Display(Name = "Data de Criação")]
+        public DateTime? DataCriacao { get; set; }
 
         /// <summary>
         /// Prazo para terminar a tarefa
@@ -46,8 +50,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Data de conclusão da tarefa
         /// </summary>
+        [Display(Name = "Data de Conclusão")]
         public DateTime? DataConclusao { get; set; }
-
-
     }
 }

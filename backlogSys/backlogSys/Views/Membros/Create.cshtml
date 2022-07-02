@@ -27,7 +27,7 @@
                 <label asp-for="Efetividade" class="control-label"></label>
                 <select asp-for="Efetividade" class="form-control">
                     <option value="">Seleciona uma opção</option>
-                    <option value="Sim">Contratado/Efetivo</option>
+                    <option value="Sim">Contrato/Efetivo</option>
                     <option value="Nao">Estagiário</option>
                 </select>
                 <span asp-validation-for="Efetividade" class="text-danger"></span>
@@ -37,7 +37,6 @@
                 <label asp-for="Foto" class="control-label"></label>
                 <input type="file" name="foto" class="form-control" accept=".jpg,.png" />
             </div>
-
             <div class="form-group">
                 <label asp-for="EquipaFK" class="control-label"></label>
                 <select asp-for="EquipaFK" class="form-control" asp-items="ViewBag.EquipaFK">
