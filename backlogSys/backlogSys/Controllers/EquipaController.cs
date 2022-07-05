@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 using backlogSys.Models;
 using backlogSys.Data;
@@ -6,10 +7,10 @@ using backlogSys.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace backlogSys.Controllers
-{
-    public class EquipaController : Controller
-    {
+namespace backlogSys.Controllers{
+
+    [Authorize(Roles = "Administrativo")]
+    public class EquipaController : Controller{
 
         /// <summary>
         /// Cria uma referência à base de dados do projeto

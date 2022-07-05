@@ -131,7 +131,7 @@ namespace backlogSys.Areas.Identity.Pages.Account{
                     await _userManager.AddToRoleAsync(user, "Funcionario");
 
                     Input.Membros.Email = Input.Email;
-                    Input.Membros.Foto = "null.jpg";
+                    Input.Membros.Foto = "null.png";
                     Input.Membros.UserId = user.Id; //Conecta a base de dados de autenticação com a base de dados do projeto
 
                     try {

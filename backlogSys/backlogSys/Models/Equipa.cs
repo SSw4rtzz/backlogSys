@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backlogSys.Models {
 
@@ -24,6 +25,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Email da Equipa
         /// </summary>
+        [EmailAddress(ErrorMessage = "Deve inserir um {0} válido")]
         public string? Email { get; set; }
 
         /// <summary>

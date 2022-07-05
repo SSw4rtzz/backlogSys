@@ -20,7 +20,7 @@ namespace backlogSys.Controllers{
      *  
      */
 
-    [AllowAnonymous]
+    [Authorize]
     public class MembrosController : Controller {
 
 
@@ -228,6 +228,16 @@ namespace backlogSys.Controllers{
         //POST: Membros/Delete
         //Criado em contexto de base de dados um trigger que elimina também o user,
         //ou seja, uma vez que um funcionário é eliminado a sua conta também deixa de existir
+        //
+        //CREATE TRIGGER deleteUser
+        //    BEFORE DELETE
+        //    ON Membros
+        //    FOR EACH ROW
+        //BEGIN
+        //DELETE FROM AspNetUsers WHERE Id = old.UserId;
+        //END;
+        //
+        //
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id) {

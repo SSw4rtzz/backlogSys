@@ -9,7 +9,7 @@ using backlogSys.Models;
 using backlogSys.Data;
 
 namespace backlogSys.Controllers{
-    [Authorize]
+    [Authorize(Roles = "Administrativo,Funcionario")]
     public class TarefasController : Controller{
         /// <summary>
         /// Cria uma referência à base de dados do projeto
@@ -55,25 +55,28 @@ namespace backlogSys.Controllers{
                 return NotFound();
             }
 
-            string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
-            var tarefa = _context.Tarefas
-                .Include(a => a.Membros)
-                .Where(m => m.Id == id && m.Membros.UserId == idAuthenticatedUser)
-                .FirstOrDefaultAsync();
-
-
+            var tarefa = await _context.Tarefas.FirstOrDefaultAsync(m => m.Id == id);
             if (tarefa == null) {
                 return NotFound();
             }
             return View(tarefa);
         }
 
-        //GET: Tarefas/Create
-        /// <summary>
-        /// Cria a view para adicionar uma tarefa
-        /// </summary>
+            /*string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
+            var tarefa = _context.Tarefas
+                .Include(a => a.Membros)
+                .Where(m => m.Id == id && m.Membros.UserId == idAuthenticatedUser)
+                .FirstOrDefaultAsync();
 
-        public IActionResult Create() {
+        }*/
+
+
+            //GET: Tarefas/Create
+            /// <summary>
+            /// Cria a view para adicionar uma tarefa
+            /// </summary>
+
+            public IActionResult Create() {
             ViewData["MembrosFK"] = new SelectList(_context.Membros.OrderBy(m => m.Nome), "Id", "Nome");
             return View();
         }
@@ -106,12 +109,12 @@ namespace backlogSys.Controllers{
             if (id == null || _context.Tarefas == null) {
                 return RedirectToAction("Index");
             }
+            ViewData["MembrosFK"] = new SelectList(_context.Membros.OrderBy(m => m.Nome), "Id", "Nome");
 
             var tarefa = await _context.Tarefas.FindAsync(id);
             if (tarefa == null) {
                 return RedirectToAction("Index");
             }
-
 
             HttpContext.Session.SetInt32("id", tarefa.Id);
 
@@ -155,6 +158,7 @@ namespace backlogSys.Controllers{
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewData["MembrosFK"] = new SelectList(_context.Tarefas, "Id", "Id", tarefa.MembrosFK);
             return View(tarefa);
         }
 
