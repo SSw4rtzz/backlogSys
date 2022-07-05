@@ -136,6 +136,8 @@ namespace backlogSys.Controllers{
 
             
             HttpContext.Session.SetInt32("idMem", membroEquipa.Id);
+            HttpContext.Session.SetString("fotoNome", membroEquipa.Foto);
+
 
             return View(membroEquipa);
         }
@@ -143,15 +145,16 @@ namespace backlogSys.Controllers{
         //POST: Membros/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK")] MembrosEquipa membroEquipa, IFormFile foto) {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK,UserId")] MembrosEquipa membroEquipa, IFormFile foto) {
             if(id != membroEquipa.Id) {
                 return NotFound();
             }
 
             int? idMembro = HttpContext.Session.GetInt32("idMem");
+            string? fotoNome = HttpContext.Session.GetString("fotoNome");
 
             //Limite de tempo para edição de dados
-            if(idMembro == null) {
+            if (idMembro == null) {
                 ModelState.AddModelError("", "Ultrapassou o tempo limite para a edição dos dados");
                 return View(membroEquipa);
             }
@@ -163,13 +166,22 @@ namespace backlogSys.Controllers{
 
             //Caso não seja fornecida uma foto, é atribuido uma foto padrão com o nome null.jpg
             if (foto == null) {
-                
+                    membroEquipa.Foto = fotoNome;
             } else {
                 //Verifica se o ficheiro inserido é uma imagem válida, se não for, mostra mensagem de erro
                 if (!(foto.ContentType == "image/jpeg" || foto.ContentType == "image/png")) {
                     ModelState.AddModelError("", "Por favor insira um ficheiro do tipo jpg ou png");
                     return View(membroEquipa);
                 } else {
+                    //Apaga a imagem do utilizador quand inseriida uma nova
+                    if (fotoNome != null) {
+                        string pathImag = _webHostEnvironment.WebRootPath;
+                        pathImag = Path.Combine(pathImag, "Fotos", fotoNome);
+                        FileInfo fi = new FileInfo(pathImag);
+                        fi.Delete();
+                    }
+                    
+
                     string nomeImag = "";
                     Guid g;
                     g = Guid.NewGuid();
