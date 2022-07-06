@@ -181,7 +181,6 @@ namespace backlogSys.Controllers{
                         fi.Delete();
                     }
                     
-
                     string nomeImag = "";
                     Guid g;
                     g = Guid.NewGuid();

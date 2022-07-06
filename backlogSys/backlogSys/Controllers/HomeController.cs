@@ -1,6 +1,8 @@
 ﻿using backlogSys.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace backlogSys.Controllers
 {
