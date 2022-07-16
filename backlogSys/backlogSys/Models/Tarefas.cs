@@ -52,5 +52,10 @@ namespace backlogSys.Models {
         /// </summary>
         [Display(Name = "Data de Conclusão")]
         public DateTime? DataConclusao { get; set; }
+
+        /// <summary>
+        /// Prioridade da tarefa
+        /// </summary>
+        public string? Prioridade { get; set; }
     }
 }

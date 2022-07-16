@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backlogSys.Data;
 
@@ -10,13 +11,14 @@ using backlogSys.Data;
 namespace backlogSys.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220707201000_AddPriorityTarefas")]
+    partial class AddPriorityTarefas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("backlogSys.Data.ApplicationUser", b =>
@@ -321,23 +323,23 @@ namespace backlogSys.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DataConclusao = new DateTime(2022, 7, 16, 16, 29, 20, 182, DateTimeKind.Utc).AddTicks(8950),
-                            DataCriacao = new DateTime(2022, 7, 16, 16, 29, 20, 182, DateTimeKind.Utc).AddTicks(8940),
+                            DataConclusao = new DateTime(2022, 7, 7, 20, 9, 59, 939, DateTimeKind.Utc).AddTicks(6960),
+                            DataCriacao = new DateTime(2022, 7, 7, 20, 9, 59, 939, DateTimeKind.Utc).AddTicks(6960),
                             Descricao = "Corrigir erro do formulário das tarefas, este não está a enviar os dados para a base de dados como devia",
                             MembrosFK = 2,
                             PontoSituacao = "Por fazer",
-                            Prazo = new DateTime(2022, 7, 16, 16, 29, 20, 182, DateTimeKind.Utc).AddTicks(8950),
+                            Prazo = new DateTime(2022, 7, 7, 20, 9, 59, 939, DateTimeKind.Utc).AddTicks(6960),
                             Titulo = "Corrigir erro do formulário das tarefas, no BacklogSys"
                         },
                         new
                         {
                             Id = 2,
-                            DataConclusao = new DateTime(2022, 7, 16, 16, 29, 20, 182, DateTimeKind.Utc).AddTicks(8950),
-                            DataCriacao = new DateTime(2022, 7, 16, 16, 29, 20, 182, DateTimeKind.Utc).AddTicks(8950),
+                            DataConclusao = new DateTime(2022, 7, 7, 20, 9, 59, 939, DateTimeKind.Utc).AddTicks(6960),
+                            DataCriacao = new DateTime(2022, 7, 7, 20, 9, 59, 939, DateTimeKind.Utc).AddTicks(6960),
                             Descricao = "Criar interface para o sistema de logins",
                             MembrosFK = 2,
                             PontoSituacao = "Em desenvolvimento",
-                            Prazo = new DateTime(2022, 7, 16, 16, 29, 20, 182, DateTimeKind.Utc).AddTicks(8950),
+                            Prazo = new DateTime(2022, 7, 7, 20, 9, 59, 939, DateTimeKind.Utc).AddTicks(6960),
                             Titulo = "FrontEnd Sistema de Logins"
                         });
                 });
@@ -371,21 +373,21 @@ namespace backlogSys.Data.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "a1412160-608a-41a9-9871-a4d3eca5b617",
+                            ConcurrencyStamp = "940026b5-0a71-41e2-90ac-e7f3c6f51116",
                             Name = "Administrativo",
                             NormalizedName = "ADMINISTRATIVO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "f9e70938-4b7a-4220-aac1-75221154e392",
+                            ConcurrencyStamp = "5025e023-ccdf-48b1-9e06-31d38f7831fc",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "c1ed04d3-cb0a-4db9-bca0-f0ed663b407b",
+                            ConcurrencyStamp = "7047b50d-b219-4ed4-8887-b76bb06de46b",
                             Name = "Chefe",
                             NormalizedName = "CHEFE"
                         });
