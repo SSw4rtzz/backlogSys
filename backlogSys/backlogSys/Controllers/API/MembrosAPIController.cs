@@ -15,35 +15,39 @@ namespace backlogSys.Controllers.API
     public class MembrosAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MembrosAPIController(ApplicationDbContext context)
+
+        public MembrosAPIController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            this._webHostEnvironment = hostEnvironment;
         }
 
         // GET: api/MembrosAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MembrosEquipa>>> GetMembros()
-        {
-          if (_context.Membros == null)
-          {
-              return NotFound();
-          }
-            return await _context.Membros.ToListAsync();
-        }
+        public async Task<ActionResult<IEnumerable<MembrosViewModel>>> GetMembros(){
+              return await _context.Membros
+                .Include(a => a.Equipa).OrderByDescending(a => a.Id)
+                .Select(a => new MembrosViewModel{
+                    Id = a.Id,
+                    Nome = a.Nome,
+                    Email = a.Email,
+                    Efetividade = a.Efetividade,
+                    Foto = a.Foto,
+                    NomeEquipa = a.Equipa.Nome
+                }).ToListAsync();
+            }
 
         // GET: api/MembrosAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MembrosEquipa>> GetMembrosEquipa(int id)
-        {
-          if (_context.Membros == null)
-          {
+        public async Task<ActionResult<MembrosEquipa>> GetMembrosEquipa(int id){
+          if (_context.Membros == null){
               return NotFound();
           }
             var membrosEquipa = await _context.Membros.FindAsync(id);
 
-            if (membrosEquipa == null)
-            {
+            if (membrosEquipa == null){
                 return NotFound();
             }
 
@@ -53,27 +57,50 @@ namespace backlogSys.Controllers.API
         // PUT: api/MembrosAPI/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMembrosEquipa(int id, MembrosEquipa membrosEquipa)
-        {
-            if (id != membrosEquipa.Id)
-            {
+        public async Task<IActionResult> PutMembrosEquipa(int id, MembrosEquipa membrosEquipa) { //, IFormFile uploadFoto) {
+            if (id != membrosEquipa.Id){
                 return BadRequest();
             }
+            //Tentativa falhada de editar a fotografia pela API
+            /*
+            string nomeImag = "";
+            Guid g;
+            g = Guid.NewGuid();
+            nomeImag = g.ToString();
+            string typeImag = Path.GetExtension(uploadFoto.FileName).ToLower(); //Guarda formato da imagem
+            nomeImag += typeImag;
+            membrosEquipa.Foto = nomeImag;
+
+            //Valida dados e se válidos, adiciona à Base de Dados e guarda numa pasta com nome "Fotos"
+            if (ModelState.IsValid) {
+                try {
+                    _context.Update(membrosEquipa);
+                    await _context.SaveChangesAsync();
+                } catch (Exception ex) {
+                    ModelState.AddModelError("", "Não foi possivel guardar os dados introduzidos na base de dados");
+                }
+
+                //Verifica se foi enviada uma fotografia e guarda-a no destino Fotos
+                if (uploadFoto != null) {
+                    string destImag = _webHostEnvironment.WebRootPath;
+                    if (!Directory.Exists(Path.Combine(destImag, "Fotos"))) { //Cria diretorio Fotos, caso este ainda não exista
+                        Directory.CreateDirectory(Path.Combine(destImag, "Fotos"));
+                    }
+                    destImag = Path.Combine(destImag, "Fotos", membrosEquipa.Foto);
+                    using var stream = new FileStream(destImag, FileMode.Create); //Guarda a fotografia na pasta Fotos
+                    await uploadFoto.CopyToAsync(stream);
+                }
+            }*/
 
             _context.Entry(membrosEquipa).State = EntityState.Modified;
 
-            try
-            {
+            try{
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MembrosEquipaExists(id))
-                {
+            } catch (DbUpdateConcurrencyException){
+                if (!MembrosEquipaExists(id)){
                     return NotFound();
                 }
-                else
-                {
+                else{
                     throw;
                 }
             }
@@ -82,19 +109,49 @@ namespace backlogSys.Controllers.API
         }
 
         // POST: api/MembrosAPI
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // [FromForm] -> FormData
         [HttpPost]
-        public async Task<ActionResult<MembrosEquipa>> PostMembrosEquipa(MembrosEquipa membrosEquipa)
-        {
-          if (_context.Membros == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Membros'  is null.");
-          }
-            _context.Membros.Add(membrosEquipa);
-            await _context.SaveChangesAsync();
+        public async Task<ActionResult<MembrosEquipa>> PostMembrosEquipa([FromForm] MembrosEquipa membrosEquipa, IFormFile uploadFoto){
+
+            //Caso não seja fornecida uma foto, é atribuido uma foto padrão com o nome null.jpg
+            if (uploadFoto == null) {
+                membrosEquipa.Foto = "null.jpg";
+            } else {
+                string nomeImag = "";
+                Guid g;
+                g = Guid.NewGuid();
+                nomeImag = g.ToString();
+                string typeImag = Path.GetExtension(uploadFoto.FileName).ToLower(); //Guarda formato da imagem
+                nomeImag += typeImag;
+                membrosEquipa.Foto = nomeImag;
+            }
+            
+
+            //Valida dados e se válidos, adiciona à Base de Dados e guarda numa pasta com nome "Fotos"
+            if (ModelState.IsValid) {
+                try {
+                    _context.Add(membrosEquipa);
+                    await _context.SaveChangesAsync();
+                } catch (Exception ex) {
+                    ModelState.AddModelError("", "Não foi possivel guardar os dados introduzidos na base de dados");
+                }
+
+                //Verifica se foi enviada uma fotografia e guarda-a no destino Fotos
+                if (uploadFoto != null) {
+                    string destImag = _webHostEnvironment.WebRootPath;
+                    if (!Directory.Exists(Path.Combine(destImag, "Fotos"))) { //Cria diretorio Fotos, caso este ainda não exista
+                        Directory.CreateDirectory(Path.Combine(destImag, "Fotos"));
+                    }
+                    destImag = Path.Combine(destImag, "Fotos", membrosEquipa.Foto);
+                    using var stream = new FileStream(destImag, FileMode.Create); //Guarda a fotografia na pasta Fotos
+                    await uploadFoto.CopyToAsync(stream);
+                }
+            }
 
             return CreatedAtAction("GetMembrosEquipa", new { id = membrosEquipa.Id }, membrosEquipa);
+
         }
+
 
         // DELETE: api/MembrosAPI/5
         [HttpDelete("{id}")]

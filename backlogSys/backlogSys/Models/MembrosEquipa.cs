@@ -23,7 +23,7 @@ namespace backlogSys.Models {
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         [StringLength(50, ErrorMessage ="O {0} não pode ter mais que {1} caracteres")]
         [RegularExpression("[A-Za-záéíóúâêîôûàèìòùñçãõÁÉÍÓÚÂ '-]+",ErrorMessage = "Apenas são aceites letras no {0}")]
-        public string? Nome { get; set; }
+        public string Nome { get; set; }
 
         /// <summary>
         /// Email do Empregado

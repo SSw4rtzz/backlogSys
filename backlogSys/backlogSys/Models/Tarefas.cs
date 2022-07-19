@@ -13,7 +13,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Titulo da tarefa
         /// </summary>
-        public string? Titulo { get; set; }
+        public string Titulo { get; set; }
 
         /// <summary>
         /// Descrição da Tarefa

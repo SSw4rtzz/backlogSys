@@ -20,7 +20,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Nome da Equipa
         /// </summary>
-        public string? Nome { get; set; }
+        public string Nome { get; set; }
 
         /// <summary>
         /// Email da Equipa
