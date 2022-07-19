@@ -25,6 +25,8 @@ using backlogSys.Data;
 using backlogSys.Models;
 
 namespace backlogSys.Areas.Identity.Pages.Account{
+
+    [Authorize(Roles = "Administrativo,Chefe")]
     public class RegisterModel : PageModel {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;

@@ -21,7 +21,7 @@ namespace backlogSys.Models {
         /// Nome do empregado
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
-        [StringLength(50, ErrorMessage ="O {0} não pode ter mais que {1} caracteres")]
+        [StringLength(30, ErrorMessage ="O {0} não pode ter mais que {1} caracteres")]
         [RegularExpression("[A-Za-záéíóúâêîôûàèìòùñçãõÁÉÍÓÚÂ '-]+",ErrorMessage = "Apenas são aceites letras no {0}")]
         public string Nome { get; set; }
 
@@ -44,7 +44,7 @@ namespace backlogSys.Models {
         /// <summary>
         /// Chave FK ID da equipa a que pertence o empregado
         /// </summary>
-        
+        [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
         [Display(Name = "Equipa")]
         public int EquipaFK { get; set; }
         [ForeignKey(nameof(EquipaFK))]

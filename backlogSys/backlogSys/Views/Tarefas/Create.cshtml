@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
-                <input asp-for="Titulo" class="form-control" />
+                <input asp-for="Titulo" class="form-control"/>
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,8 +24,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="PontoSituacao" class="control-label"></label>
-                <input asp-for="PontoSituacao" class="form-control" />
-                <span asp-validation-for="PontoSituacao" class="text-danger"></span>
+                <select asp-for="PontoSituacao" class="form-control">
+                    <option value="">Selecionar estado da tarefa</option>
+                    <option value="Por fazer">Por fazer</option>
+                    <option value="Em desenvolvimento">Em desenvolvimento</option>
+                    <option value="Em espera">Em espera</option>
+                    <option value="Concluido">Concluido</option>
+                    <option value="Cancelado">Caancelado</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="MembrosFK" class="control-label"></label>
@@ -35,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DataCriacao" class="control-label"></label>
-                <input asp-for="DataCriacao" class="form-control" />
+                <input asp-for="DataCriacao" class="form-control"/>
                 <span asp-validation-for="DataCriacao" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -51,8 +57,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Prioridade" class="control-label"></label>
-                <input asp-for="Prioridade" class="form-control" />
-                <span asp-validation-for="Prioridade" class="text-danger"></span>
+                <select asp-for="Prioridade" class="form-control">
+                    <option value="">Selecionar prioridade da tarefa (Caso aplicável)</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
+                </select>
             </div>
 
             <div class="form-group">

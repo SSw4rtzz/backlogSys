@@ -36,6 +36,7 @@ namespace backlogSys.Controllers{
 
         //GET: Tarefas
         public async Task<IActionResult> Index(){
+            //Mostra apenas as tarefas da autoria do Utilizador
             if (User.IsInRole("Funcionario")) {
                 string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
                 var tarefas = _context.Tarefas
@@ -62,15 +63,6 @@ namespace backlogSys.Controllers{
             return View(tarefa);
         }
 
-            /*string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
-            var tarefa = _context.Tarefas
-                .Include(a => a.Membros)
-                .Where(m => m.Id == id && m.Membros.UserId == idAuthenticatedUser)
-                .FirstOrDefaultAsync();
-
-        }*/
-
-
             //GET: Tarefas/Create
             /// <summary>
             /// Cria a view para adicionar uma tarefa
@@ -84,7 +76,7 @@ namespace backlogSys.Controllers{
         //POST: Tarefas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Descricao,PontoSituacao,MembrosFK,DataCriacao,Prazo,DataConclusao")] Tarefas tarefa) {
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Descricao,PontoSituacao,MembrosFK,DataCriacao,Prazo,DataConclusao,Prioridade")] Tarefas tarefa) {
 
             string idAuthenticatedUser = _userManager.GetUserId(User); //Id do user autenticado
             var idMembro = _context.Membros
@@ -124,7 +116,7 @@ namespace backlogSys.Controllers{
         //POST: Tarefas/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,PontoSituacao,MembrosFK,DataCriacao,Prazo,DataConclusao")] Tarefas tarefa) {
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,PontoSituacao,MembrosFK,DataCriacao,Prazo,DataConclusao,Prioridade")] Tarefas tarefa) {
             if (id != tarefa.Id) {
                 return NotFound();
             }
@@ -153,6 +145,7 @@ namespace backlogSys.Controllers{
                         throw;
                     }
                 } catch (Exception) {
+                    ModelState.AddModelError("", "Não foi possivel guardar os dados introduzidos na base de dados");
                     throw;
                 }
                 return RedirectToAction(nameof(Index));

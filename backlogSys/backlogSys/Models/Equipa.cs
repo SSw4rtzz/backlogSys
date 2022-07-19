@@ -20,11 +20,13 @@ namespace backlogSys.Models {
         /// <summary>
         /// Nome da Equipa
         /// </summary>
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         public string Nome { get; set; }
 
         /// <summary>
         /// Email da Equipa
         /// </summary>
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         [EmailAddress(ErrorMessage = "Deve inserir um {0} válido")]
         public string? Email { get; set; }
 

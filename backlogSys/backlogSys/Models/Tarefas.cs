@@ -13,6 +13,8 @@ namespace backlogSys.Models {
         /// <summary>
         /// Titulo da tarefa
         /// </summary>
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [StringLength(20, ErrorMessage = "O {0} não pode ter mais que {1} caracteres")]
         public string Titulo { get; set; }
 
         /// <summary>
@@ -30,7 +32,6 @@ namespace backlogSys.Models {
         /// <summary>
         /// FK MembrosEq, Membros a desempenhar a tarefa
         /// </summary>
-
         [Display(Name = "Membros")]
         public int? MembrosFK { get; set; }
         [ForeignKey(nameof(MembrosFK))]
@@ -39,17 +40,20 @@ namespace backlogSys.Models {
         /// <summary>
         /// Data de criação da tarefa
         /// </summary>
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
         [Display(Name = "Data de Criação")]
         public DateTime? DataCriacao { get; set; }
 
         /// <summary>
         /// Prazo para terminar a tarefa
         /// </summary>
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
         public DateTime? Prazo { get; set; }
 
         /// <summary>
         /// Data de conclusão da tarefa
         /// </summary>
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
         [Display(Name = "Data de Conclusão")]
         public DateTime? DataConclusao { get; set; }
 

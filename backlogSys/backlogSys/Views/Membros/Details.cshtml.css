@@ -1,0 +1,23 @@
+
+.container {
+    overflow: auto;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    width:50%;
+    float: left;
+}
+
+.imag {
+    border-radius: 50%
+}
+
+.link {
+    text-decoration: none !important;
+    color: white !important;
+}
+

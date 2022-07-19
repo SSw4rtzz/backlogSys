@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using backlogSys.Data;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+
 builder.Services.Configure<IdentityOptions>(options => {
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(50);
     options.Lockout.MaxFailedAccessAttempts = 5;    //Numero de tetativas de login
@@ -36,7 +38,7 @@ builder.Services.Configure<IdentityOptions>(options => {
 });
 
 builder.Services.ConfigureApplicationCookie(options => {
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.AccessDeniedPath = "/Error";//"/Identity/Account/AccessDenied";
     options.Cookie.Name = "BacklogSys";
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromHours(1); //Tempo de inatividade

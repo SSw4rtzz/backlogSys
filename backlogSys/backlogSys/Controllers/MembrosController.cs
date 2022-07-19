@@ -64,13 +64,14 @@ namespace backlogSys.Controllers{
         /// <summary>
         /// Cria a view para adicionar um Membro a uma equipa
         /// </summary>
-
+        [Authorize(Roles = "Administrativo")]
         public IActionResult Create() {
             ViewData["EquipaFK"] = new SelectList(_context.Equipa.OrderBy(e => e.Nome), "Id", "Nome");
             return View();
         }
 
         //POST: Membros/Create
+        [Authorize(Roles = "Administrativo")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Email,Efetividade,Foto,EquipaFK")] MembrosEquipa membros, IFormFile foto) {

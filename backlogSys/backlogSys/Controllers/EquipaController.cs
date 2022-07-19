@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace backlogSys.Controllers{
 
-    [Authorize(Roles = "Administrativo")]
+    [Authorize(Roles = "Administrativo,Chefe")]
     public class EquipaController : Controller{
 
         /// <summary>

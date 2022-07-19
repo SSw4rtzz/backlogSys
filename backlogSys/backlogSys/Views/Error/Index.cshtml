@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
+
+
+
+<div>
+
+    <h1 style="color:red" class="titulo">Não tens acesso a esta página</h1>
+    <center>
+        Pede uma role mais alta ao responsável pela tua equipa ou faz login numa conta com estas permissões
+        <a class="nav-link text-blue" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </center>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

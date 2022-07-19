@@ -19,6 +19,7 @@
     <None Remove="Views\Membros %28copiar%29\" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
     <None Remove="Controllers\API\" />
+    <None Remove="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
@@ -40,5 +41,9 @@
     <Folder Include="Data\" />
     <Folder Include="Views\Equipa\" />
     <Folder Include="Controllers\API\" />
+    <Folder Include="Views\Error\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
   </ItemGroup>
 </Project>
